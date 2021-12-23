@@ -6,6 +6,7 @@ import { readFileSync } from 'fs';
 import { renderToString } from 'react-dom/server'; 
 
 import { App } from '../client/App';
+import { handleModifyAnswerVotes } from '../shared/utility';
 
 const data = {
     questions: [{
@@ -45,6 +46,12 @@ const data = {
 const app = new express();
 
 app.use(express.static("dist"));
+
+app.get("/vote/:answerId", (req, res)=>{
+    const { query, params } = req;
+    data.answers = handleModifyAnswerVotes(data.answers, params.answerId, +query.increment)
+    res.send("OK")
+})
 
 app.get("/data", async(_req, res) => {
     res.json(data);
