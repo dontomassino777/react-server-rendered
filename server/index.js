@@ -26,7 +26,7 @@ const data = {
         answerId: "A2",
         questionId: "Q1",
         upvotes: 1,
-        conent: "Fetch"
+        content: "Fetch"
     },
     {
         answerId: "A3",
@@ -45,6 +45,10 @@ const data = {
 const app = new express();
 
 app.use(express.static("dist"));
+
+app.get("/data", async(_req, res) => {
+    res.json(data);
+})
 
 app.get('/', async (_req, res) => {
     
